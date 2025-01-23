@@ -33,7 +33,9 @@ function appendNumber(number) {
 
 // +,-,x,/,mod
 function appendOperator(operator) {
-    document.getElementById("display").value += operator;
+    if (document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1) !== operator){ //checking last operator with input operator
+        document.getElementById("display").value += operator;
+    }
 }
 // x^2 button
 function squareButton() {
