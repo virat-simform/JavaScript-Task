@@ -33,7 +33,7 @@ function appendNumber(number) {
 
 // +,-,x,/,mod
 function appendOperator(operator) {
-    if (document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1) !== operator){ //checking last operator with input operator
+    if (document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1) !== operator) { //checking last operator with input operator
         document.getElementById("display").value += operator;
     }
 }
@@ -53,14 +53,23 @@ function lnButton() {
 }
 
 // log button
-function logButton(){
+function logButton() {
     document.getElementById('display').value = Math.log10(parseFloat(document.getElementById('display').value));
 }
 
+//close bracket
+function closeBracket(){
+    let countopen =document.getElementById("display").value.split('(').length - 1;
+    let countclose =document.getElementById("display").value.split(')').length - 1;
+    if(countopen > countclose){
+        document.getElementById("display").value += ')';
+    }
+}
+
 // sign function
-function sign(){
-    let x=document.getElementById("display").value;    
-    document.getElementById("display").value=-x;
+function sign() {
+    let x = document.getElementById("display").value;
+    document.getElementById("display").value = -x;
 }
 
 // absolute button 
@@ -78,13 +87,13 @@ function inversebutton() {
 }
 
 // sqrt Button
-function sqrtButton(){
+function sqrtButton() {
     document.getElementById('display').value = Math.sqrt(parseFloat(document.getElementById('display').value));
 }
 // factorial button
 function factorial(n) {
-    if (n < 0) return 'Error'; 
-    if (n === 0 || n === 1) return 1; 
+    if (n < 0) return 'Error';
+    if (n === 0 || n === 1) return 1;
     let result = 1;
     for (let i = 1; i <= n; i++) {
         result *= i;
@@ -101,7 +110,7 @@ function factorialButton() {
 }
 
 // power of 10 
-function powerof10(){
+function powerof10() {
     document.getElementById('display').value = Math.pow(10, parseFloat(document.getElementById('display').value));
 }
 
@@ -109,7 +118,7 @@ function powerof10(){
 function clearOneCharacter() {
     let currentDisplay = document.getElementById('display').value;
     document.getElementById('display').value = currentDisplay.slice(0, -1);
-} 
+}
 // clear screen button
 function clearDisplay() {
     document.getElementById("display").value = '';
