@@ -1,5 +1,6 @@
-let memory = 0;
-
+let memory = 0; 
+let op=['+','-','%','*','/']; // for operator validations
+let flag=true; // for after result validations
 // memory buttons
 function memo(action) {
     let currentValue = parseFloat(document.getElementById('display').value);
@@ -19,23 +20,37 @@ function memo(action) {
 }
 // Pi button
 function appendPi() {
-    document.getElementById('display').value += Math.PI;
+    if ((op.includes((document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1)))) || (document.getElementById("display").value=='')){
+        document.getElementById('display').value += Math.PI;
+    }
 }
 // Euler's number button
 function appendE() {
-    document.getElementById('display').value += Math.E;
+    if ((op.includes((document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1)))) || (document.getElementById("display").value=='')){
+        document.getElementById('display').value += Math.E;
+    }
 }
-
 // all numbers 0 to 9
 function appendNumber(number) {
-    document.getElementById("display").value += number;
+    if (flag==false){
+        document.getElementById("display").value = number; // after result validation
+    }else{
+        document.getElementById("display").value += number;
+    }
+    flag=true;
 }
 
 // +,-,x,/,mod
 function appendOperator(operator) {
-    if (document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1) !== operator) { //checking last operator with input operator
+    if (document.getElementById("display").value==''){ // placeholder
+    }else if(op.includes((document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1)))){
+        document.getElementById('display').value = document.getElementById('display').value.slice(0, -1);
+        document.getElementById("display").value += operator;
+    }else if((document.getElementById("display").value != 'Error') &&
+        (document.getElementById("display").value != 'NaN')) { 
         document.getElementById("display").value += operator;
     }
+    
 }
 // x^2 button
 function squareButton() {
@@ -57,12 +72,23 @@ function logButton() {
     document.getElementById('display').value = Math.log10(parseFloat(document.getElementById('display').value));
 }
 
+//open bracket
+function openBracket() {
+    if ((document.getElementById("display").value != 'Error') &&
+        (document.getElementById("display").value != 'NaN')) {
+        document.getElementById("display").value += '(';
+    }
+}
+
 //close bracket
-function closeBracket(){
-    let countopen =document.getElementById("display").value.split('(').length - 1;
-    let countclose =document.getElementById("display").value.split(')').length - 1;
-    if(countopen > countclose){
-        document.getElementById("display").value += ')';
+function closeBracket() {
+    let countopen = document.getElementById("display").value.split('(').length - 1;
+    let countclose = document.getElementById("display").value.split(')').length - 1;
+    if (countopen > countclose) {
+        if(op.includes((document.getElementById("display").value.charAt(document.getElementById("display").value.length - 1)))){
+        } else { // operator + close bracket validation
+            document.getElementById("display").value += ')';
+        }
     }
 }
 
@@ -101,7 +127,7 @@ function factorial(n) {
     return result;
 }
 function factorialButton() {
-    let x = parseInt(document.getElementById('display').value);
+    let x = parseInt(eval(document.getElementById("display").value));
     if (x < 0) {
         document.getElementById('display').value = 'Error';
     } else {
@@ -126,9 +152,15 @@ function clearDisplay() {
 
 function calculateResult() {
     let expression = document.getElementById("display").value;
-    try {
-        document.getElementById("display").value = eval(expression);
-    } catch (error) {
-        document.getElementById("display").value = 'Error';
+    let countopen = document.getElementById("display").value.split('(').length - 1;
+    let countclose = document.getElementById("display").value.split(')').length - 1;
+    if (countopen != countclose) {
+    } else{
+        try {
+            document.getElementById("display").value = eval(expression);
+            flag=false;
+        } catch (error) {
+            document.getElementById("display").value = 'Error';
+        }
     }
 }
