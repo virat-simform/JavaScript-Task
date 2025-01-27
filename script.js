@@ -118,10 +118,9 @@ function sqrtButton() {
 }
 // factorial button
 function factorial(n) {
-    if (n < 0) return 'Error';
     if (n === 0 || n === 1) return 1;
     let result = 1;
-    for (let i = 1; i <= n; i++) {
+    for (let i = 2; i <= n; i++) {
         result *= i;
     }
     return result;
@@ -129,7 +128,7 @@ function factorial(n) {
 function factorialButton() {
     let x = parseInt(eval(document.getElementById("display").value));
     if (x < 0) {
-        document.getElementById('display').value = 'Error';
+        document.getElementById('display').value = "Infinity";
     } else {
         document.getElementById('display').value = factorial(x);
     }
@@ -164,3 +163,10 @@ function calculateResult() {
         }
     }
 }
+document.addEventListener('keydown', function(event) { // keyboard feature 
+    if (event.key >= '0' && event.key <= '9') {
+        appendNumber(event.key);
+    } else if(op.includes(event.key)){
+        appendOperator(event.key);
+    }
+});
